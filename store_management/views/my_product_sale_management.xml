@@ -1,0 +1,173 @@
+<odoo>
+    <data >
+        <!-- my.product.sale.management Form View -->
+        <record id="my_product_sale_management_view_form" model="ir.ui.view">
+            <field name="name">my.product.sale.management.view.form</field>
+            <field name="model">my.product.sale.management</field>
+            <field name="arch" type="xml">
+                <form string="Product Sale Management">
+                    <header>
+                        <field name="status" widget="statusbar" class="oe_highlight"/>
+                        <button name="confirm_button" string="CONFIRM" type="object" class="oe_highlight" attrs="{'invisible': [('status', '!=', 'draft')]}"/>
+                        <button name="paid_button" string="PAID" type="object" class="oe_highlight" attrs="{'invisible': [('status', '!=', 'confirm')]}" context="{'hardik': 'test'}"/>
+                        <button name="reset_draft" string="Reset Draft" type="object" class="oe_highlight" />
+                    </header>
+                    <sheet>
+
+                        <widget name="web_ribbon" title="PAID" bg_color="bg-success" attrs="{'invisible': [('status', '!=', 'paid')]}"/>
+
+                        <group>
+                            <group>
+                                <field name="customer_id" attrs="{'readonly': [('status', '=', 'paid')]}" context="{'TEST': 'TEST'}"/>
+                                <!-- <field name="company_partnerr_id" attrs="{'readonly': [('status', '=', 'paid')]}"/> -->
+                                <field name="mobile_no_id" attrs="{'readonly': [('status', '=', 'paid')]}" />
+                            </group>
+
+                            <group>
+                                <field name="order_date" readonly="1"/>
+                                <field name="new_address_id" attrs="{'readonly': [('status', '=', 'paid')]}"/>
+                                <field name="email_id" attrs="{'readonly': [('status', '=', 'paid')]}"/>
+
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <page name="product_sale_lines" string="Order Lines">
+                                <field name="product_sale_line_ids" >
+                                    <tree>
+                                        <field name="product_name_id" context="{'check_price': True}" force_save="1"/>
+                                        <field name="product_brand_name" readonly="1"/>
+                                        <field name="consumer_quantity"/>
+                                        <field name="selling_price"/>
+                                        <field name="last_selling_price"/>
+                                        <field name="total_amount" readonly="1"/>
+                                    </tree>
+                            </field>
+                                <!-- <field name="product_sale_line_ids" nolable="1" attrs="{'readonly': [('status', '=', 'paid')]}"/> -->
+                            </page>
+                        </notebook>
+
+                        <div class="oe_right">
+                            <group>
+                                <field name="final_total" string="Final Total" attrs="{'readonly': [('status', '=', 'paid')]}" />
+                            </group>
+                        </div>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- my.product.sale.management Tree View -->
+
+        <record id="my_product_sale_management_view_tree" model="ir.ui.view">
+            <field name="name">my.product.sale.management.view.tree</field>
+            <field name="model">my.product.sale.management</field>
+            <field name="arch" type="xml">
+                <tree string="Product Sale Order Line Tree View">
+                    <field name="customer_id"/>
+                    <field name="mobile_no_id"/>
+                    <field name="order_date"/>
+                    <field name="new_address_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- product.sale.order.line Form View -->
+
+        <record id="product_sale_order_line_view_form" model="ir.ui.view">
+            <field name="name">product.sale.order.line.view.form</field>
+            <field name="model">product.sale.order.line</field>
+            <field name="arch" type="xml">
+                <form string="Product Sale Order Line">
+                    <group>
+                        <field name="product_name_id" />
+                        <field name="product_brand_name" readonly="1"/>
+                        <field name="consumer_quantity"/>
+                        <field name="selling_price"/>
+                        <field name="last_selling_price"/>
+                        <field name="total_amount" readonly="1"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- product.sale.order.line Tree View -->
+
+        <record id="product_sale_order_line_view_tree" model="ir.ui.view">
+            <field name="name">product.sale.order.line.view.tree</field>
+            <field name="model">product.sale.order.line</field>
+            <field name="arch" type="xml">
+                <tree string="Product Sale Order Line Tree View">
+                    <field name="product_name_id"/>
+                    <field name="product_brand_name"/>
+                    <field name="consumer_quantity" />
+                    <field name="selling_price"/>
+                    <field name="last_selling_price"/>
+
+                    <field name="total_amount"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <!-- product.sale.order pivot View -->
+
+
+        <!-- <record id="inventory_pivot_view" model="ir.ui.view">
+        <field name="name">my.product.sale.management.view.pivot</field>
+        <field name="model">my.product.sale.management</field>
+        <field name="arch" type="xml">
+            <pivot string="Inventory pivot View">
+                <field name="product_brand_name" type='row'/>
+                <field name="cost_price"/>
+                <field name="selling_price"/>
+
+            </pivot>
+        </field>
+    </record> -->
+
+
+        <!-- product.sale.order.line pivot View -->
+
+        <record id="inventory_pivot_view" model="ir.ui.view">
+            <field name="name">product.sale.order.line.view.pivot</field>
+            <field name="model">product.sale.order.line</field>
+            <field name="arch" type="xml">
+                <pivot string="Inventory pivot View">
+                    <field name="product_name_id" type='row'/>
+                    <field name="consumer_quantity" />
+                    <field name="selling_price"/>
+                    <field name="total_amount"/>
+                </pivot>
+            </field>
+        </record>
+
+
+
+        <!-- Action Window for my.product.sale.management -->
+
+        <record id="my_product_sale_management_action" model="ir.actions.act_window">
+            <field name="name">Product Sale Management</field>
+            <field name="res_model">my.product.sale.management</field>
+            <field name="view_mode">tree,form,pivot</field>
+        </record>
+
+        <!-- Action Window for product.sale.order.line -->
+
+        <record id="product_sale_order_line_action" model="ir.actions.act_window">
+            <field name="name">Product Sale Order Line</field>
+            <field name="res_model">product.sale.order.line</field>
+            <field name="view_mode">tree,form,pivot</field>
+        </record>
+
+        <!-- Menu Item -->
+
+        <menuitem id="product_sale_management_menu" name="Product Sales" action="my_product_sale_management_action" parent="main_user" sequence="3" />
+
+    </data>
+</odoo>

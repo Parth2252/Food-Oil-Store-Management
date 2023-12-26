@@ -1,0 +1,114 @@
+<odoo>
+    <data>
+
+        <!--  Form View -->
+        <record id="user_view_form" model="ir.ui.view">
+            <field name="name">user.view.form</field>
+            <field name="model">customer.details</field>
+            <field name="arch" type="xml">
+                <form string="User Form TEST">
+                    <sheet>
+                        <h1>
+                            <center>User Details</center>
+                        </h1>
+                        <field name="image" widget="image" class="oe_avatar m-0" options="{'size': (100, 100)}" />
+                        <group >
+                            <group>
+                                <field name="name" />
+                                <label for="street" string="Address" />
+                                <div >
+                                    <div class="o_address_format" name="div_address">
+                                        <field name="street" placeholder="Street..." class="o_address_street"/>
+                                        <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                        <field name="city" placeholder="City" class="o_address_city"/>
+                                        <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                        <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                        <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                    </div>
+                                </div>
+                            </group>
+
+                            <group>
+                                <field name="mobile_no" />
+                                <field name="email" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View -->
+
+        <record id="user_view_list" model="ir.ui.view">
+            <field name="name">user.view.list</field>
+            <field name="model">customer.details</field>
+            <field name="arch" type="xml">
+                <tree string="User Tree View">
+                    <field name="image" widget="image" options="{'size': (100, 100)}"/>
+                    <field name="name"/>
+                    <field name="mobile_no" />
+                    <field name="email" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- kanban View -->
+<record id="user_kanban_view" model="ir.ui.view">
+    <field name="name">user.kanban.view</field>
+    <field name="model">customer.details</field>
+    <field name="arch" type="xml">
+        <kanban class="o_res_partner_kanban">
+            <field name="id"/>
+            <field name="name"/>
+            <field name="image"/>
+            <field name="mobile_no"/>
+            <templates>
+                <t t-name="kanban-box">
+                    <div class="oe_kanban_global_click" style="height:135px;">
+                        <div style="width:30%; float:left;display:inline-block">
+                            <img alt="Avatar" t-att-src="kanban_image('customer.details','image',record.id.raw_value)" style="width:100px;height:120px;"/>
+                        </div>
+                        <div style="width:60%;float:right;display:inline-block;">
+                            <strong>
+                                <h3>
+                                    <field name="name"/>
+                                </h3>
+                            </strong>
+                            Mobile No : <field name="mobile_no"/>
+                            <br/>
+                            Email Id :<field name="email" />
+                        </div>
+                    </div>
+                </t>
+            </templates>
+        </kanban>
+    </field>
+</record>
+
+    <!-- Action Window -->
+
+    <record id="model_user_action_action_view" model="ir.actions.act_window">
+        <field name="name">Customer Details</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">customer.details</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <!-- <record id="sequence_reconcile_seq" model="ir.sequence">
+            <field name="name">Account reconcile sequence</field>
+            <field name="code">account.reconcile</field>
+            <field name="prefix">A</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="False" name="company_id"/>
+        </record> -->
+
+    <!-- Menu Items -->
+
+    <menuitem id="main_user" name="Main Menu" />
+    <menuitem id="sub_user" name="User" action="store_management.model_user_action_action_view" parent="main_user" sequence="1" />
+
+</data>
+
+</odoo>

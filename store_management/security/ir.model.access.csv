@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+store_management.access_customer_details,access_customer_details,store_management.model_customer_details,base.group_user,1,1,1,1
+store_management.access_my_inventory_management,access_my_inventory_management,store_management.model_my_inventory_management,base.group_user,1,1,1,1
+store_management.access_my_product_sale_management,access_my_product_sale_management,store_management.model_my_product_sale_management,base.group_user,1,1,1,1
+store_management.access_product_sale_order_line,access_product_sale_order_line,store_management.model_product_sale_order_line,base.group_user,1,1,1,1
